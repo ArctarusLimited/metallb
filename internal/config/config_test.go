@@ -75,6 +75,7 @@ address-pools:
   auto-assign: false
   bgp-advertisements:
   - aggregation-length: 32
+    aggregation-length-v6: 64
     localpref: 100
     communities: ["bar", "1234:2345"]
   - aggregation-length: 24
@@ -122,16 +123,18 @@ address-pools:
 						AutoAssign:    false,
 						BGPAdvertisements: []*BGPAdvertisement{
 							{
-								AggregationLength: 32,
-								LocalPref:         100,
+								AggregationLength:   32,
+								AggregationLengthV6: 64,
+								LocalPref:           100,
 								Communities: map[uint32]bool{
 									0xfc0004d2: true,
 									0x04D20929: true,
 								},
 							},
 							{
-								AggregationLength: 24,
-								Communities:       map[uint32]bool{},
+								AggregationLength:   24,
+								AggregationLengthV6: 128,
+								Communities:         map[uint32]bool{},
 							},
 						},
 					},
@@ -141,8 +144,9 @@ address-pools:
 						AutoAssign: true,
 						BGPAdvertisements: []*BGPAdvertisement{
 							{
-								AggregationLength: 32,
-								Communities:       map[uint32]bool{},
+								AggregationLength:   32,
+								AggregationLengthV6: 128,
+								Communities:         map[uint32]bool{},
 							},
 						},
 					},
@@ -432,8 +436,9 @@ address-pools:
 						CIDR:       []*net.IPNet{ipnet("1.2.3.0/24")},
 						BGPAdvertisements: []*BGPAdvertisement{
 							{
-								AggregationLength: 32,
-								Communities:       map[uint32]bool{},
+								AggregationLength:   32,
+								AggregationLengthV6: 128,
+								Communities:         map[uint32]bool{},
 							},
 						},
 					},
@@ -457,8 +462,9 @@ address-pools:
 						CIDR:       []*net.IPNet{ipnet("1.2.3.0/24")},
 						BGPAdvertisements: []*BGPAdvertisement{
 							{
-								AggregationLength: 32,
-								Communities:       map[uint32]bool{},
+								AggregationLength:   32,
+								AggregationLengthV6: 128,
+								Communities:         map[uint32]bool{},
 							},
 						},
 					},
