@@ -38,15 +38,16 @@ type configFile struct {
 }
 
 type peer struct {
-	MyASN         uint32         `yaml:"my-asn"`
-	ASN           uint32         `yaml:"peer-asn"`
-	Addr          string         `yaml:"peer-address"`
+	MyASN                uint32         `yaml:"my-asn"`
+	ASN                  uint32         `yaml:"peer-asn"`
+	Addr                 string         `yaml:"peer-address"`
 	SrcAddr       string         `yaml:"source-address"`
-	Port          uint16         `yaml:"peer-port"`
-	HoldTime      string         `yaml:"hold-time"`
-	RouterID      string         `yaml:"router-id"`
-	NodeSelectors []nodeSelector `yaml:"node-selectors"`
-	Password      string         `yaml:"password"`
+	Port                 uint16         `yaml:"peer-port"`
+	HoldTime             string         `yaml:"hold-time"`
+	RouterID             string         `yaml:"router-id"`
+	NodeSelectors        []nodeSelector `yaml:"node-selectors"`
+	Password             string         `yaml:"password"`
+	AllowMPBGPEncodingV4 bool           `yaml:"allow-mp-bgp-encoding-ipv4"`
 }
 
 type nodeSelector struct {
@@ -114,6 +115,8 @@ type Peer struct {
 	NodeSelectors []labels.Selector
 	// Authentication password for routers enforcing TCP MD5 authenticated sessions
 	Password string
+	// AllowMPBGPEncodingV4 allows MP BGP encoding for IPv4
+	AllowMPBGPEncodingV4 bool
 	// TODO: more BGP session settings
 }
 
@@ -311,15 +314,16 @@ func parsePeer(p peer) (*Peer, error) {
 		password = p.Password
 	}
 	return &Peer{
-		MyASN:         p.MyASN,
-		ASN:           p.ASN,
-		Addr:          ip,
+		MyASN:                p.MyASN,
+		ASN:                  p.ASN,
+		Addr:                 ip,
 		SrcAddr:       src,
-		Port:          port,
-		HoldTime:      holdTime,
-		RouterID:      routerID,
-		NodeSelectors: nodeSels,
-		Password:      password,
+		Port:                 port,
+		HoldTime:             holdTime,
+		RouterID:             routerID,
+		NodeSelectors:        nodeSels,
+		Password:             password,
+		AllowMPBGPEncodingV4: p.AllowMPBGPEncodingV4,
 	}, nil
 }
 

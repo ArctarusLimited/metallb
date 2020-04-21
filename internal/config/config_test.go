@@ -55,6 +55,7 @@ peers:
   hold-time: 180s
   router-id: 10.20.30.40
   source-address: 10.20.30.40
+  allow-mp-bgp-encoding-ipv4: true
 - my-asn: 100
   peer-asn: 200
   peer-address: 2.3.4.5
@@ -97,22 +98,24 @@ address-pools:
 			want: &Config{
 				Peers: []*Peer{
 					{
-						MyASN:         42,
-						ASN:           142,
-						Addr:          net.ParseIP("1.2.3.4"),
+						MyASN:                42,
+						ASN:                  142,
+						Addr:                 net.ParseIP("1.2.3.4"),
 						SrcAddr:       net.ParseIP("10.20.30.40"),
-						Port:          1179,
-						HoldTime:      180 * time.Second,
-						RouterID:      net.ParseIP("10.20.30.40"),
-						NodeSelectors: []labels.Selector{labels.Everything()},
+						Port:                 1179,
+						HoldTime:             180 * time.Second,
+						RouterID:             net.ParseIP("10.20.30.40"),
+						NodeSelectors:        []labels.Selector{labels.Everything()},
+						AllowMPBGPEncodingV4: true,
 					},
 					{
-						MyASN:         100,
-						ASN:           200,
-						Addr:          net.ParseIP("2.3.4.5"),
-						Port:          179,
-						HoldTime:      90 * time.Second,
-						NodeSelectors: []labels.Selector{selector("bar in (quux),foo=bar")},
+						MyASN:                100,
+						ASN:                  200,
+						Addr:                 net.ParseIP("2.3.4.5"),
+						Port:                 179,
+						HoldTime:             90 * time.Second,
+						NodeSelectors:        []labels.Selector{selector("bar in (quux),foo=bar")},
+						AllowMPBGPEncodingV4: false,
 					},
 				},
 				Pools: map[string]*Pool{
