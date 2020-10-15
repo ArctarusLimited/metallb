@@ -394,7 +394,8 @@ func findAltIP(addr net.IP) net.IP {
 							return ip
 						}
 					} else {
-						if ip.To4() == nil && ip.IsGlobalUnicast() {
+						// Note: force usage of link-local addr for BGP session.
+						if ip.To4() == nil && !ip.IsGlobalUnicast() {
 							return ip
 						}
 					}
