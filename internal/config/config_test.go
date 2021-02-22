@@ -59,6 +59,7 @@ peers:
 - my-asn: 100
   peer-asn: 200
   peer-address: 2.3.4.5
+  allow-ipv6-prefixes: false
   node-selectors:
   - match-labels:
       foo: bar
@@ -107,6 +108,8 @@ address-pools:
 						RouterID:             net.ParseIP("10.20.30.40"),
 						NodeSelectors:        []labels.Selector{labels.Everything()},
 						AllowMPBGPEncodingV4: true,
+						AllowV4Prefixes:      true,
+						AllowV6Prefixes:      true,
 					},
 					{
 						MyASN:                100,
@@ -116,6 +119,8 @@ address-pools:
 						HoldTime:             90 * time.Second,
 						NodeSelectors:        []labels.Selector{selector("bar in (quux),foo=bar")},
 						AllowMPBGPEncodingV4: false,
+						AllowV4Prefixes:      true,
+						AllowV6Prefixes:      false,
 					},
 				},
 				Pools: map[string]*Pool{
@@ -190,12 +195,14 @@ peers:
 			want: &Config{
 				Peers: []*Peer{
 					{
-						MyASN:         42,
-						ASN:           42,
-						Addr:          net.ParseIP("1.2.3.4"),
-						Port:          179,
-						HoldTime:      90 * time.Second,
-						NodeSelectors: []labels.Selector{labels.Everything()},
+						MyASN:           42,
+						ASN:             42,
+						Addr:            net.ParseIP("1.2.3.4"),
+						Port:            179,
+						HoldTime:        90 * time.Second,
+						NodeSelectors:   []labels.Selector{labels.Everything()},
+						AllowV4Prefixes: true,
+						AllowV6Prefixes: true,
 					},
 				},
 				Pools: map[string]*Pool{},
@@ -274,12 +281,14 @@ peers:
 			want: &Config{
 				Peers: []*Peer{
 					{
-						MyASN:         42,
-						ASN:           42,
-						Addr:          net.ParseIP("1.2.3.4"),
-						Port:          179,
-						HoldTime:      90 * time.Second,
-						NodeSelectors: []labels.Selector{labels.Everything()},
+						MyASN:           42,
+						ASN:             42,
+						Addr:            net.ParseIP("1.2.3.4"),
+						Port:            179,
+						HoldTime:        90 * time.Second,
+						NodeSelectors:   []labels.Selector{labels.Everything()},
+						AllowV4Prefixes: true,
+						AllowV6Prefixes: true,
 					},
 				},
 				Pools: map[string]*Pool{},

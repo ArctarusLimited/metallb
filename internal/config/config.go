@@ -48,6 +48,8 @@ type peer struct {
 	NodeSelectors        []nodeSelector `yaml:"node-selectors"`
 	Password             string         `yaml:"password"`
 	AllowMPBGPEncodingV4 bool           `yaml:"allow-mp-bgp-encoding-ipv4"`
+	AllowV4Prefixes      *bool          `yaml:"allow-ipv4-prefixes"`
+	AllowV6Prefixes      *bool          `yaml:"allow-ipv6-prefixes"`
 }
 
 type nodeSelector struct {
@@ -117,6 +119,10 @@ type Peer struct {
 	Password string
 	// AllowMPBGPEncodingV4 allows MP BGP encoding for IPv4
 	AllowMPBGPEncodingV4 bool
+	// AllowV4Prefixes allows IPv4 prefixes announcements to the peer
+	AllowV4Prefixes bool
+	// AllowV4Prefixes allows IPv6 prefixes announcements to the peer
+	AllowV6Prefixes bool
 	// TODO: more BGP session settings
 }
 
@@ -313,6 +319,15 @@ func parsePeer(p peer) (*Peer, error) {
 	if p.Password != "" {
 		password = p.Password
 	}
+	allowV4Prefixes := true
+	if p.AllowV4Prefixes != nil {
+		allowV4Prefixes = *p.AllowV4Prefixes
+	}
+	allowV6Prefixes := true
+	if p.AllowV6Prefixes != nil {
+		allowV6Prefixes = *p.AllowV6Prefixes
+	}
+
 	return &Peer{
 		MyASN:                p.MyASN,
 		ASN:                  p.ASN,
@@ -324,6 +339,8 @@ func parsePeer(p peer) (*Peer, error) {
 		NodeSelectors:        nodeSels,
 		Password:             password,
 		AllowMPBGPEncodingV4: p.AllowMPBGPEncodingV4,
+		AllowV4Prefixes:      allowV4Prefixes,
+		AllowV6Prefixes:      allowV6Prefixes,
 	}, nil
 }
 
